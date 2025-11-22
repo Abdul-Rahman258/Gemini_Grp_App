@@ -6,14 +6,21 @@ import streamlit as st
 import datetime
 from google.api_core import exceptions
 import json
+import os
 
-# Load credentials directly for google-cloud-firestore
-# We need to read the project ID from the JSON to be safe, though Client usually infers it.
-with open("firebase_key.json", "r") as f:
-    key_data = json.load(f)
-    project_id = key_data.get("project_id")
+# Load credentials - try Streamlit secrets first, then local file
+try:
+    # Try to load from Streamlit secrets (for deployment)
+    firebase_secrets = st.secrets["firebase"]
+    cred = service_account.Credentials.from_service_account_info(dict(firebase_secrets))
+    project_id = firebase_secrets["project_id"]
+except (FileNotFoundError, KeyError):
+    # Fallback to local firebase_key.json file (for local development)
+    with open("firebase_key.json", "r") as f:
+        key_data = json.load(f)
+        project_id = key_data.get("project_id")
+    cred = service_account.Credentials.from_service_account_file("firebase_key.json")
 
-cred = service_account.Credentials.from_service_account_file("firebase_key.json")
 db = firestore.Client(credentials=cred, project=project_id, database='grpapp')
 
 def get_db():
