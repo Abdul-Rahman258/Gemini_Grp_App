@@ -4,3 +4,5 @@ bcrypt
 pandas
 sqlalchemy
 fpdf
+firebase-admin
+google-cloud-firestore
