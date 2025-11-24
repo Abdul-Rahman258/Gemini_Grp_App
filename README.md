@@ -25,19 +25,3 @@ A Streamlit-based group chat application powered by Google's Gemini API.
    - Register a new account on the login screen.
    - The first user does not automatically become admin (you can change this in the database or use the provided `verify_app.py` logic to seed an admin if needed, or just use the app to register).
 
-## Deploying to Streamlit Cloud (Free)
-
-1. **Push to GitHub**:
-   - Create a new repository on GitHub.
-   - Push all these files to the repository.
-
-2. **Deploy**:
-   - Go to [share.streamlit.io](https://share.streamlit.io/).
-   - Connect your GitHub account.
-   - Select your new repository and the `app.py` file.
-   - Click **Deploy**.
-
-> [!WARNING]
-> **Data Persistence on Streamlit Cloud**:
-> Streamlit Cloud's free tier does not persist local files (like `chat_app.db`) after the app restarts or goes to sleep. This means **all users and chats will be lost** if the app reboots.
-> For a permanent solution, you would need to connect this to a cloud database (like Google Firestore or AWS RDS), which requires more advanced setup.
